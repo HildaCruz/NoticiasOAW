@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Hello there</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link href="main.css" rel="stylesheet">
+        <script>
+            function getrss(){
+                var url = document.getElementById('_url').value;
+                alert(url);
+            }
+
+        </script>
+
+
+    </head>
+    <body>
+        <div class="navbar">
+            <h1>Noticias RSS</h1>
+            <form onsubmit="getrss();">
+                <input type="text" id="_url" style="width: 450px" placeholder="inserte el url aquí">
+                <button type="submit" class="btn btn-dark">Buscar</button>
+            </form>
+        </div>
+        <div class="row content">
+            <div class="sidebar col-lg-2">
+                <h4>Filtro por fecha</h4>
+                <div class="accordion">
+                        <div class="accordion-year">
+                                2020
+                                <div class="accordion-child accordion-month">
+                                    enero
+                                    <div class=" accordion-child accordion-day">
+                                        19
+                                    </div>
+                                </div>
+                            </div>
+                </div>
+                
+            </div>
+            <div class="results col-lg-10">
+                lorem ipsum
+            </div>
+        </div>
+        
+        
+    </body>
+</html>
