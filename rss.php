@@ -1,8 +1,8 @@
+//$url = 'http://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml';
 <?php
     include "simplepie-1.5/autoloader.php";
     require_once 'simplepie-1.5/autoloader.php';
 
-    //$url = 'http://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml';
     $url = 'https://www.reforma.com/rss/cultura.xml';
     $current_url = $_GET["_url"];
     echo $_GET["url"];
