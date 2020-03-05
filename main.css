@@ -32,10 +32,10 @@ input[type="text"]{
     vertical-align: middle;
 }
 .active,.card-header:hover {background-color: #7E9DA2!important;}
-.card-header#month{background-color: #B6D2D5!important;}
-.card-header#month:hover{background-color: #7E9DA2!important;}
-.card-header#day{background-color: #c6dcde!important;}
-.card-header#day:hover{background-color: #8da8ad!important;}
+.card-header.month{background-color: #B6D2D5!important;}
+.card-header.month:hover{background-color: #7E9DA2!important;}
+.card-header.day{background-color: #c6dcde!important;}
+.card-header.day:hover{background-color: #8da8ad!important;}
 .panel {
     padding: 0 18px;
     background-color: white;
@@ -48,6 +48,5 @@ color: white;
 }
 
 .search-input{
-    float: right;
     margin: 10px;
 }

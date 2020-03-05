@@ -5,7 +5,7 @@ require_once 'simplepie-1.5/autoloader.php';
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="UTF-8">
+        <meta  http-equiv=”Content-Type” content=”text/html; charset="UTF-8">
 
         <title>Hello there</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -18,9 +18,8 @@ require_once 'simplepie-1.5/autoloader.php';
 
         <link href="main.css" rel="stylesheet">
         <script>
-            function getrss(){
-                var url = document.getElementById('_url').value;
-                alert(url);
+            function loadNewsByDate(date){
+                document.getElementById('news').innerHTML = //VER CÓMO CARGAR NOTICIAS POR PHP
             }
         </script>
     </head>
@@ -31,7 +30,7 @@ require_once 'simplepie-1.5/autoloader.php';
                 <h5>(Really Simple Syndication)</h5>
             </div>
             
-            <form onsubmit="getrss();" action="LinksRSS.php" method="post">
+            <form action="LinksRSS.php" method="post">
                 <input type="text" id="_url" name="url" style="width: 450px" placeholder="Para añadir un RSS inserte el url aquí">
                 <button type="submit" class="btn btn-dark">Añadir</button>
             </form>
@@ -43,56 +42,84 @@ require_once 'simplepie-1.5/autoloader.php';
 
                 <div class="accordion" id="accordion">
                     <div class="card">
-                        <div class="card-header" id="year">
-                            <h5 class="mb-0">
-                                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseYear" aria-expanded="true" aria-controls="year">
-                                2020
-                                </button>
-                            </h5>
-                        </div>
-                        <div id="collapseYear" class="collapse show" aria-labelledby="year" data-parent="#accordion">
-                            <div class="card-header" id="month">
-                                <h5 class="mb-0">
-                                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseMonth" aria-expanded="true" aria-controls="month">
-                                    Enero
-                                    </button>
-                                </h5>
-                            </div>
-                            <div id="collapseMonth" class="collapse" aria-labelledby="month" data-parent="#year">
-                                <div class="card-header" id="day">
-                                    <h5 class="mb-0">
-                                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseDay" aria-expanded="true" aria-controls="day">
-                                        12
-                                        </button>
-                                    </h5>
-                                </div>
-                                <div id="collapseDay" class="collapse" aria-labelledby="day" data-parent="#month">
-                                <div class="card-body">
-                                    Noticia1
-                                </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                    <?php
+                    $mysqli = new mysqli('localhost', 'root', '', 'noticias');
+
+                    if (!$mysqli) {
+                        $info = "No se pudo realizar la conexión a la base de datos";
+                    } else {
+                        $query = "SELECT * FROM articulo";
+                        $resultado = $mysqli->query($query); 
+                        if ($resultado->num_rows > 0) {
+                            $current_year = "";
+                            $current_month = "";
+                            $current_day = "";
+
+                            while ($aValues = $resultado->fetch_assoc()) {
+                                $fecha = $aValues['fecha'];
+                                $link = $aValues['id'];
+                                $this_year = date("Y",strtotime($fecha));
+                                $this_month = date("M",strtotime($fecha));
+                                $this_day = date("d",strtotime($fecha));
+                                if($this_year != $current_year){?>
+                                    <div class="card-header" id="year-<?php echo $this_year?>">
+                                        <h5 class="mb-0">
+                                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseYear<?php echo $this_year?>" aria-expanded="true" aria-controls="year-<?php echo $this_year?>">
+                                            <?php echo $this_year;?>
+                                            </button>
+                                        </h5>
+                                    </div>
+                               <?php }
+                                if($this_month != $current_month){?>
+                                    <div id="collapseYear<?php echo $this_year?>" class="collapse show" aria-labelledby="year-<?php echo $this_year?>" data-parent="#accordion">
+                                        <div class="card-header month" id="month-<?php echo $this_month?>">
+                                            <h5 class="mb-0">
+                                                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseMonth<?php echo $this_month?>" aria-expanded="true" aria-controls="month-<?php echo $this_month?>">
+                                                <?php echo $this_month;?>
+                                                </button>
+                                            </h5>
+                                        </div>
+                                        <div id="collapseMonth<?php echo $this_month?>" class="collapse" aria-labelledby="month-<?php echo $this_month?>" data-parent="#year-<?php echo $this_year?>">
+                                        
+                                <?php }
+                                if($this_day != $current_day){
+                                    $date_to_find = $this_day."-".$this_month."-".$this_year; ?>
+                                            <div class="card-header day" id="day-<?php echo $this_day?>" onclick="loadNewsByDate(<?php echo $date_to_find?>)">
+                                                <h5 class="mb-0">
+                                                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseDay<?php echo $this_day?>" 
+                                                    aria-expanded="true" aria-controls="day-<?php echo $this_day?>">
+                                                        <?php echo $this_day;?>
+                                                    </button>
+                                                </h5>
+                                            </div>
+                                <?php }
+                                //end card
+                                $current_year = $this_year;
+                                $current_month = $this_month;
+                                $current_day = $this_day;
+                            }?> 
+                                        </div> <!--collapse month-->
+                                    </div><!--collapse year-->
+                    <?php } //end if ?>
+                        
+                    </div> <!--card-->         
+                </div> <!--accordion-->
+            </div> <!--sidebar-->
+
             <div id="results" class="col-lg-10">
-                <form class="form-inline search-input">
-                    <input class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Search">
-                    <button type="submit" class="btn btn-dark">Buscar</button>
-                </form>
-
+                <div class="col-lg-12 search-input">
+                    <form class="form-inline">
+                        <input class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Search">
+                        <button type="submit" class="btn btn-dark">Buscar</button>
+                    </form>
+                </div>
+                <div id="news" class="col-lg-12">
                 <?php
-                $mysqli = new mysqli('localhost', 'root', 'root', 'noticias');
-
-                if (!$mysqli) {
-                    $info = "No se pudo realizar la conexión a la base de datos";
-                } else {
                     $query = "SELECT * FROM articulo";
-                    $resultado = $mysqli->query($query);
-
+                    $resultado = $mysqli->query($query); 
                     if ($resultado->num_rows > 0) {
                         while ($aValues = $resultado->fetch_assoc()) {
+                            
                             $link = $aValues['id'];
                             $titulo = $aValues['titulo'];
                             $autor = $aValues['autor'];
@@ -111,10 +138,11 @@ require_once 'simplepie-1.5/autoloader.php';
                         
                     $resultado->free();
                     $mysqli->close();
-                }
                     }
+                
+                } //end else
                 ?>
-
+                </div>
 
             </div>
     </body>
