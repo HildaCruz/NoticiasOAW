@@ -23,8 +23,8 @@ require_once 'simplepie-1.5/autoloader.php';
     <body>
         <div class="navbar">
             <h1>Noticias RSS</h1>
-            <form onsubmit="getrss();">
-                <input type="text" id="_url" style="width: 450px" placeholder="Para añadir un RSS inserte el url aquí">
+            <form onsubmit="getrss();" action="LinksRSS.php" method="post">
+                <input type="text" id="_url" name="url" style="width: 450px" placeholder="Para añadir un RSS inserte el url aquí">
                 <button type="submit" class="btn btn-dark">Añadir</button>
             </form>
             <button type="button" class="btn btn-dark">Actualizar noticias</button>
