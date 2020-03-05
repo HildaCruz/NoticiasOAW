@@ -46,3 +46,8 @@ input[type="text"]{
 .btn-link,.btn-link:hover{
 color: white;
 }
+
+.search-input{
+    float: right;
+    margin: 10px;
+}

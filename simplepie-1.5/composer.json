@@ -36,5 +36,9 @@
 		"psr-0": {
 			"SimplePie": "library"
 		}
-	}
+	},
+	"require": {
+        "simplepie/simplepie": "dev-master"
+    }
+
 }
