@@ -23,11 +23,10 @@
         $feed->enable_cache();
         $feed->init();
 
-        $mysqli = new mysqli('localhost', 'root', 'root', 'noticias');
+        $mysqli = new mysqli('localhost', 'root', '', 'noticias');
 
         $nombre = $feed->get_title();
         $subtitulo = $feed->get_description();
-
 
         if (!$mysqli) {
 
