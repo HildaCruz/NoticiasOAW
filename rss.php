@@ -3,6 +3,7 @@
     include "simplepie-1.5/autoloader.php";
     require_once 'simplepie-1.5/autoloader.php';
 
+
     $url = 'https://www.reforma.com/rss/cultura.xml';
     $current_url = $_GET["_url"];
     echo $_GET["url"];

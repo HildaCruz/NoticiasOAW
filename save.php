@@ -48,7 +48,6 @@
             $idPagina = $aValues['id'];
 
 
-
             for ($i = 0; $i < $feed->get_item_quantity(); ++$i) {
 
                 $item = $feed->get_item($i);
@@ -56,7 +55,7 @@
                 $link = $item->get_link();
                 $titulo = $item->get_title();
                 $autor = ($item->get_author()->get_name() == null) ? "Desconocido" : $item->get_author()->get_name();
-                $fecha = $item->get_date('H:i:s Y-m-d');
+                $fecha = $item->get_date('Y-m-d H:i:s');
                 $descripcion = $item->get_description();
 
                 $queryArticulo = "SELECT * FROM articulo WHERE link = '" . $link . "'";

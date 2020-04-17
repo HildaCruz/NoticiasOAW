@@ -27,5 +27,5 @@ if(isset($_POST['url'])){
         $resultadoSQL = $mysqli->query($query);
     }
 }
-header('Location: index.php');
+header('Location: index.html');
 ?>
