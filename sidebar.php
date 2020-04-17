@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Hilda Cruz
- * Date: 17/04/2020
- * Time: 05:34 PM
- */
+
 
 //GLOBAL VARIABLES
 $dates= array();
