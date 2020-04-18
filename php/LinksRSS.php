@@ -2,12 +2,12 @@
 if(isset($_POST['url'])){
     $url = $_POST['url'].PHP_EOL;
 
-    $file = fopen('archivo.txt', 'a');
+    $file = fopen('../archivo.txt', 'a');
     fwrite($file,$url);
     fwrite($file, '');
     fclose($file);
 
-    require_once 'simplepie-1.5/autoloader.php';
+    require_once '../simplepie-1.5/autoloader.php';
 
     $urlsimple = $_POST['url'];
     $feed = new SimplePie();
@@ -27,5 +27,5 @@ if(isset($_POST['url'])){
         $resultadoSQL = $mysqli->query($query);
     }
 }
-header('Location: index.html');
+header('Location: ../index.html');
 ?>

@@ -1,6 +1,5 @@
 <?php
 
-
 //GLOBAL VARIABLES
 $dates= array();
 $days= array();
@@ -8,7 +7,6 @@ $months= array();
 $years=array();
 $this_month="";
 $this_day="";
-
 
 //DB CONNECTION
 $mysqli = new mysqli('localhost', 'root', '', 'noticias');
@@ -26,8 +24,6 @@ if ($resultado1->num_rows > 0) {
         $fecha = $fila['fecha'];
         $this_date = date("Y-m-d", strtotime($fecha));
         array_push($dates, $fecha);
-
-
     }
 }
 ?>
