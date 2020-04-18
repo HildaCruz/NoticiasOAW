@@ -23,7 +23,7 @@ input[type="text"]{
 
 .card-header{
     background-color: #a6c8cc !important;
-    color: white;
+    color: white !important;
     cursor: pointer;
     border: none;
     outline: none;
@@ -43,11 +43,16 @@ input[type="text"]{
     overflow: hidden;
     transition: max-height 0.2s ease-out;
 }
-.btn-link,.btn-link:hover{
-color: white;
-}
+.btn-link,.btn-link:hover,a,a:hover{color: white!important;}
+a.home,a.home:hover{color: black!important; text-decoration: none!important;}
 
 .search-input{
     margin: 10px;
 }
-.card-body{padding: 0!important;}
+.card-body.sb{padding: 0!important;}
+
+img{
+    width: 20%!important;
+    height: auto;
+}
+p.card-text{margin-bottom: 2%!important;}

@@ -3,3 +3,30 @@ $(document).ready( function() {
     $("#sidebar").load("php/sections/sidebar.php");
     $("#articles").load("php/sections/articles.php");
 });
+
+function buscarNoticia(palabra){
+    $.ajax({
+        url: 'php/busqueda.php',
+        data: {
+            palabra: palabra
+        },
+        type: 'POST',
+        success: function (response) {
+            var content = document.getElementById("articles");
+            content.innerHTML = response;
+            //$("#articles").innerHTML.replace(data);
+            alert("chicheñol");
+        }
+
+    });
+}
+
+function actualizarNoticias(){
+    $.ajax({
+       url: 'php/save.php',
+       success:function (data) {
+           alert("Los artículos se han actualizado exitosamente");
+            location.href="../index.html";
+       } 
+    });
+}

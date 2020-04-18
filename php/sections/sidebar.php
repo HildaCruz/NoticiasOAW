@@ -22,26 +22,26 @@ $resultado1 = $mysqli->query($query);
 if ($resultado1->num_rows > 0) {
     while ($fila = $resultado1->fetch_assoc()) {
         $fecha = $fila['fecha'];
-        $this_date = date("Y-m-d", strtotime($fecha));
-        array_push($dates, $fecha);
+        if(in_array($fecha,$dates)==0){
+            array_push($dates, $fecha);
+        }
     }
 }
 ?>
 
+<h4>Filtro por fecha</h4>
 
-    <h4>Filtro por fecha</h4>
+<?php//OBTENGO AÑOS
+$dateLength = count($dates);
+echo($dateLength);
+echo("este año ::: ");
+echo($this_year);
+for($i=0; $i<$dateLength;$i++){
+    $this_year = date("Y",($dates[$i]));
 
-    <?php//OBTENGO AÑOS
-    $dateLength = count($dates);
-    echo($dateLength);
-    echo("este año ::: ");
+    echo("este año 2: ");
     echo($this_year);
-    for($i=0; $i<$dateLength;$i++){
-        $this_year = date("Y",($dates[$i]));
-
-        echo("este año 2: ");
-        echo($this_year);
-    }
+}
 
 /*
    $this_month = date("M",strtotime($fecha));
@@ -65,7 +65,7 @@ if ($resultado1->num_rows > 0) {
             </h5>
         </div>
         <div id="collapseYear" class="collapse show" aria-labelledby="year" data-parent="#accordion">
-            <div class="card-body" id="months">
+            <div class="card-body sb" id="months">
 
                 <div class="card"><!--card for a month-->
                     <div class="card-header month" id="month">
@@ -77,7 +77,7 @@ if ($resultado1->num_rows > 0) {
                         </h5>
                     </div>
                     <div id="collapseMonth" class="collapse show" aria-labelledby="month" data-parent="#year">
-                        <div class="card-body" id="days">
+                        <div class="card-body sb" id="days">
 
                             <div class="card"><!--card for a day-->
                                 <div class="card-header day" id="day">
