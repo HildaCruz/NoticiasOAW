@@ -5,17 +5,34 @@ $(document).ready( function() {
 });
 
 function buscarNoticia(palabra){
+    alert(palabra);
     $.ajax({
         url: 'php/busqueda.php',
         data: {
             palabra: palabra
         },
         type: 'POST',
-        success: function (response) {
+        sucess: function (response) {
+
             var content = document.getElementById("articles");
             content.innerHTML = response;
-            //$("#articles").innerHTML.replace(data);
-            alert("chicheñol");
+        }
+
+    });
+}
+function buscarFecha(fecha) {
+    $.ajax({
+        url: 'php/loadByDate.php',
+        data: {
+            fecha: fecha
+        },
+        type: 'POST',
+        complete: function (data) {
+            var content=JSON.stringify(data);
+            alert(content);
+            //$("#articles").html(data);
+            //document.getElementById("articles").innerHTML.replace("holo");
+
         }
 
     });
@@ -30,3 +47,4 @@ function actualizarNoticias(){
        } 
     });
 }
+

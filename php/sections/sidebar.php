@@ -42,7 +42,7 @@ for($i=0; $i<$dateLength;$i++) {//POR CADA FECHA
 
         //CREO ACORDEON y CARD AÑO:?>
         <div class="accordion">
-        <div class="card-header"><!--year-->
+        <div class="card-header year"><!--year-->
             <a data-toggle="collapse" href="#collapseMonths-<?php echo $this_year;?>" role="button" aria-expanded="false" aria-controls="collapseMonths-<?php echo $this_year;?>">
                 <?php echo $this_year;?>
             </a>
@@ -67,11 +67,11 @@ for($i=0; $i<$dateLength;$i++) {//POR CADA FECHA
                 //CREO Y CIERRO CARD MES
                 $this_Month = date("M", strtotime($yearMonths[$j])); //letra?>
                 <div class="card-header month"><!--month-->
-                    <a data-toggle="collapse" href="#collapseDays-<?php echo $this_Month;?>" role="button" aria-expanded="false" aria-controls="collapseDays-<?php echo $this_Month;?>">
+                    <a data-toggle="collapse" href="#collapseDays-<?php echo $this_Month.$this_year;?>" role="button" aria-expanded="false" aria-controls="collapseDays-<?php echo $this_Month.$this_year;?>">
                         <?php echo $this_Month;?>
                     </a>
                 </div>
-                <div class="collapse" id="collapseDays-<?php echo $this_Month;?>"><!--DAYS-->
+                <div class="collapse" id="collapseDays-<?php echo $this_Month.$this_year;?>"><!--DAYS-->
                 <?php
 
                 $monthDays = array_reverse($monthDays);
@@ -79,10 +79,12 @@ for($i=0; $i<$dateLength;$i++) {//POR CADA FECHA
                 $days=array();
                 for ($m = 0; $m < $yMonthLength; $m++) { //OBTENGO EL DÍA DEL MES
                     $this_day = date("d",strtotime($dates[$i]));
+                    $this_date = date("Y-m-d",strtotime($dates[$i]));
                     if(in_array($this_day,$days)==false) {//mientras no se haya hecho ese día:
+
                         //CREO CARD DÍA?>
                             <div class="card-header day"><!--day-->
-                                <button class="btn btn-link">26</button>
+                                <button class="btn btn-link" onclick="buscarFecha('<?php echo $this_date?>')"><?php echo $this_day;?></button>
                             </div>
                         <?php
                         array_push($days,$this_day);//consumo el día como hecho

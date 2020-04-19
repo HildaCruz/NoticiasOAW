@@ -8,7 +8,7 @@
             if(!$mysqli){
                 $info = "No se pudo realizar la conexión a la base de datos";
             }else{
-                $query = "SELECT * FROM articulos WHERE MATCH (titulo, autor, descripcion) AGAINST ('$buscar*' IN BOOLEAN MODE)";
+                $query = "SELECT * FROM articulo WHERE MATCH (titulo, autor, descripcion) AGAINST ('$buscar*' IN BOOLEAN MODE)";
                 $resultado = $mysqli->query($query);
                 if($resultado->num_rows > 0){
                     while ($aValues = $resultado->fetch_assoc()) {
