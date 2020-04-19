@@ -32,7 +32,7 @@ function actualizarNoticias(){
        url: 'php/save.php',
        success:function (data) {
            alert("Los artículos se han actualizado exitosamente");
-            location.href="../index.html";
+            location.href="index.html";
        } 
     });
 }
