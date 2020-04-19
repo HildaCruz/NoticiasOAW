@@ -1,105 +1,139 @@
 <?php
 
 //GLOBAL VARIABLES
-$dates= array();
-$days= array();
-$months= array();
-$years=array();
-$this_month="";
-$this_day="";
+$dates= array(); //todas las fechas existentes en la bd no repetidas por Y-m-d
 
 //DB CONNECTION
 $mysqli = new mysqli('localhost', 'root', '', 'noticias');
 if (!$mysqli) {
     $info = "No se pudo realizar la conexión a la base de datos";
 } else {
-
-
-//RECIBO TODAS LAS FECHAS
-
-$query = "SELECT * FROM articulo";
-$resultado1 = $mysqli->query($query);
-if ($resultado1->num_rows > 0) {
-    while ($fila = $resultado1->fetch_assoc()) {
-        $fecha = $fila['fecha'];
-        if(in_array($fecha,$dates)==0){
-            array_push($dates, $fecha);
+    //RECIBO TODAS LAS FECHAS
+    $query = "SELECT * FROM articulo";
+    $resultado = $mysqli->query($query);
+    if ($resultado->num_rows > 0) {
+        while ($fila = $resultado->fetch_assoc()) {
+            $fecha = $fila['fecha'];
+            if(in_array($fecha,$dates) == false){
+                array_push($dates, $fecha);
+            }
         }
+    }
+    //LIBERO DB
+        $resultado->free();
+        $mysqli->close();
+} //end else
+?><h4>Filtro por fecha</h4><?php
+sort($dates);
+$dates = array_reverse($dates);
+$dateLength = count($dates);
+
+$years=array();
+for($i=0; $i<$dateLength;$i++) {//POR CADA FECHA
+    $this_year = date("Y", strtotime($dates[$i]));//OBTENGO EL AÑO
+    if (in_array($this_year, $years) == false) {//mientras no se haya hecho ese año:
+        $yearMonths = array();
+        for ($j = 0; $j < $dateLength; $j++) {//busco todos los que tengan ese año
+            $temp_year = date("Y", strtotime($dates[$j]));
+            if ($this_year == $temp_year) {
+                array_push($yearMonths, $dates[$j]); //añado los meses al array temporal de ese año
+            }
+        }
+
+        //CREO ACORDEON y CARD AÑO:
+        echo $this_year;
+        ?>
+        <?php
+
+        $yMonthLength = count($yearMonths);
+        $months = array();
+        for ($j = 0; $j < $yMonthLength; $j++) { //OBTENGO EL MES DEL AÑO
+            $this_month = date("m", strtotime($yearMonths[$j])); //numero
+            if (in_array($this_month,$months)==false) {//mientras no se haya hecho ese mes:
+                $monthDays = array();
+                for ($k = 0; $k < $yMonthLength; $k++) {//busco todos los que tengan ese mes
+                    $temp_month = date("m", strtotime($yearMonths[$j]));
+                    if ($this_month == $temp_month) {
+                        array_push($monthDays, $yearMonths[$k]); //añado los días al array temporal de ese mes
+                    }
+                }
+
+                //CREO CARD MES
+                $this_Month = date("M", strtotime($yearMonths[$j])); //letra
+                echo $this_Month;
+                ?>
+
+                <?php
+
+                $mDayLength = count($monthDays);
+                $days=array();
+                for ($m = 0; $m < $yMonthLength; $m++) { //OBTENGO EL DÍA DEL MES
+                    $this_day = date("d",strtotime($dates[$i]));
+                    if(in_array($this_day,$days)==false) {//mientras no se haya hecho ese día:
+                        //CREO Y CIERRO CARD DÍA
+                        echo $this_day;
+                        ?>
+
+                        <?php
+                        array_push($days,$this_day);//consumo el día como hecho
+                    }
+
+                }
+                //CIERRO EL CARD DEL MES?><?php
+                array_push($months,$this_month);//consumo el mes como hecho
+            }
+        }
+        //CIERRO EL ACORDEON Y CARD DEL AÑO?><?php
+        array_push($years, $this_year);//consumo el año como hecho
     }
 }
 ?>
 
-<h4>Filtro por fecha</h4>
+<div class="accordion1">
 
-<?php//OBTENGO AÑOS
-$dateLength = count($dates);
-echo($dateLength);
-echo("este año ::: ");
-echo($this_year);
-for($i=0; $i<$dateLength;$i++){
-    $this_year = date("Y",($dates[$i]));
-
-    echo("este año 2: ");
-    echo($this_year);
-}
-
-/*
-   $this_month = date("M",strtotime($fecha));
-   $this_day = date("d",strtotime($fecha));
-   echo($this_date);
-   echo("\n");
-
-    if (in_array($fecha, $dates)==0) {
-
-   */
-?>
-
-<div id="accordion">
-    <div class="card"> <!--card for a year-->
-        <div class="card-header" id="year">
-            <h5 class="mb-0 d-inline">
-                <button class="btn btn-link" data-toggle="collapse"
-                        data-target="#collapseYear" aria-expanded="true" aria-controls="collapseYear">
-                    2020
-                </button>
-            </h5>
+    <div class="card-header"><!--year-->
+        <a data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+            2020
+        </a>
+    </div>
+    <div class="collapse" id="collapseExample"><!--MONTHS-->
+        <div class="card-header month"><!--month-->
+            <a data-toggle="collapse" href="#collapseExample2" role="button" aria-expanded="false" aria-controls="collapseExample2">
+                ene
+            </a>
         </div>
-        <div id="collapseYear" class="collapse show" aria-labelledby="year" data-parent="#accordion">
-            <div class="card-body sb" id="months">
+        <div class="collapse" id="collapseExample2"><!--DAYS-->
+            <div class="card-header day"><!--day-->
+                <button class="btn btn-link">26</button>
+            </div>
+        </div>
+    </div>
 
-                <div class="card"><!--card for a month-->
-                    <div class="card-header month" id="month">
-                        <h5 class="mb-0 d-inline">
-                            <button class="btn btn-link" data-toggle="collapse"
-                                    data-target="#collapseMonth" aria-expanded="true" aria-controls="collapseMonth">
-                                Ene
-                            </button>
-                        </h5>
-                    </div>
-                    <div id="collapseMonth" class="collapse show" aria-labelledby="month" data-parent="#year">
-                        <div class="card-body sb" id="days">
+</div>
 
-                            <div class="card"><!--card for a day-->
-                                <div class="card-header day" id="day">
-                                    <h5 class="mb-0 d-inline">
-                                        <button class="btn btn-link">
-                                            15
-                                        </button>
-                                    </h5>
-                                </div>
-                            </div><!--end card for a day-->
-
-                        </div>
-                    </div>
-                </div><!--end card for a month-->
-
+<div class="accordion">
+        <div class="card-header"><!--year-->
+            <a data-toggle="collapse" href="#collapseMonths-ANIOAQUI" role="button" aria-expanded="false" aria-controls="collapseMonths-ANIOAQUI">
+                2020
+            </a>
+        </div>
+        <div class="collapse" id="collapseMonths-ANIOAQUI"><!--MONTHS-->
+            <div class="card-header month"><!--month-->
+                <a data-toggle="collapse" href="#collapseDays-MESAQUI" role="button" aria-expanded="false" aria-controls="collapseDays-MESAQUI">
+                    ene
+                </a>
+            </div>
+            <div class="collapse" id="collapseDays-MESAQUI"><!--DAYS-->
+                <div class="card-header day"><!--day-->
+                    <button class="btn btn-link">26</button>
+                </div>
             </div>
         </div>
 
-    </div><!--end card for a year-->
-</div><!--end accordion-->
-<?php
-//LIBERO DB
-    $resultado1->free();
-    $mysqli->close();
-} //end else
+    </div>
+
+
+
+
+
+<?php//CIERRO ACCORDION
