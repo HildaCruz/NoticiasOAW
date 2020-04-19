@@ -80,6 +80,7 @@ INSERT INTO `pagina` (`id`, `nombre`, `subtitulo`, `url`) VALUES
 ALTER TABLE `articulo`
   ADD PRIMARY KEY (`id`),
   ADD KEY `pagina` (`id_pagina`);
+ALTER TABLE `articulo` ADD FULLTEXT KEY `fullqr` (`titulo`,`autor`,`descripcion`);
 
 --
 -- Indices de la tabla `pagina`
