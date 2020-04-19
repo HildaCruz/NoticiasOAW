@@ -5,17 +5,12 @@ $(document).ready( function() {
 });
 
 function buscarNoticia(palabra){
-    alert(palabra);
     $.ajax({
         url: 'php/busqueda.php',
-        data: {
-            palabra: palabra
-        },
+        data: {palabra: palabra},
         type: 'POST',
-        sucess: function (response) {
-
-            //var content = document.getElementById("articles");
-            //content.innerHTML = response;
+        success: function (response) {
+            $("#articles").empty().append(response);
         }
 
     });
