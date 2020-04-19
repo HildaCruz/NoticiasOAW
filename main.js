@@ -14,8 +14,8 @@ function buscarNoticia(palabra){
         type: 'POST',
         sucess: function (response) {
 
-            var content = document.getElementById("articles");
-            content.innerHTML = response;
+            //var content = document.getElementById("articles");
+            //content.innerHTML = response;
         }
 
     });
@@ -23,16 +23,10 @@ function buscarNoticia(palabra){
 function buscarFecha(fecha) {
     $.ajax({
         url: 'php/loadByDate.php',
-        data: {
-            fecha: fecha
-        },
+        data: {fecha: fecha},
         type: 'POST',
-        complete: function (data) {
-            var content=JSON.stringify(data);
-            alert(content);
-            //$("#articles").html(data);
-            //document.getElementById("articles").innerHTML.replace("holo");
-
+        success: function (response) {
+            $("#articles").empty().append(response);
         }
 
     });
