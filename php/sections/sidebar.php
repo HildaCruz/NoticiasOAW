@@ -40,11 +40,17 @@ for($i=0; $i<$dateLength;$i++) {//POR CADA FECHA
             }
         }
 
-        //CREO ACORDEON y CARD AÑO:
-        echo $this_year;
-        ?>
+        //CREO ACORDEON y CARD AÑO:?>
+        <div class="accordion">
+        <div class="card-header"><!--year-->
+            <a data-toggle="collapse" href="#collapseMonths-<?php echo $this_year;?>" role="button" aria-expanded="false" aria-controls="collapseMonths-<?php echo $this_year;?>">
+                <?php echo $this_year;?>
+            </a>
+        </div>
+        <div class="collapse" id="collapseMonths-<?php echo $this_year;?>"><!--MONTHS-->
         <?php
 
+        $yearMonths = array_reverse($yearMonths);
         $yMonthLength = count($yearMonths);
         $months = array();
         for ($j = 0; $j < $yMonthLength; $j++) { //OBTENGO EL MES DEL AÑO
@@ -58,82 +64,36 @@ for($i=0; $i<$dateLength;$i++) {//POR CADA FECHA
                     }
                 }
 
-                //CREO CARD MES
-                $this_Month = date("M", strtotime($yearMonths[$j])); //letra
-                echo $this_Month;
-                ?>
-
+                //CREO Y CIERRO CARD MES
+                $this_Month = date("M", strtotime($yearMonths[$j])); //letra?>
+                <div class="card-header month"><!--month-->
+                    <a data-toggle="collapse" href="#collapseDays-<?php echo $this_Month;?>" role="button" aria-expanded="false" aria-controls="collapseDays-<?php echo $this_Month;?>">
+                        <?php echo $this_Month;?>
+                    </a>
+                </div>
+                <div class="collapse" id="collapseDays-<?php echo $this_Month;?>"><!--DAYS-->
                 <?php
 
+                $monthDays = array_reverse($monthDays);
                 $mDayLength = count($monthDays);
                 $days=array();
                 for ($m = 0; $m < $yMonthLength; $m++) { //OBTENGO EL DÍA DEL MES
                     $this_day = date("d",strtotime($dates[$i]));
                     if(in_array($this_day,$days)==false) {//mientras no se haya hecho ese día:
-                        //CREO Y CIERRO CARD DÍA
-                        echo $this_day;
-                        ?>
-
+                        //CREO CARD DÍA?>
+                            <div class="card-header day"><!--day-->
+                                <button class="btn btn-link">26</button>
+                            </div>
                         <?php
                         array_push($days,$this_day);//consumo el día como hecho
                     }
 
                 }
-                //CIERRO EL CARD DEL MES?><?php
+                //CIERRO EL MES?></div><?php
                 array_push($months,$this_month);//consumo el mes como hecho
             }
         }
-        //CIERRO EL ACORDEON Y CARD DEL AÑO?><?php
+        //CIERRO EL ACORDEON Y CARD DEL AÑO?> </div></div><?php
         array_push($years, $this_year);//consumo el año como hecho
     }
 }
-?>
-
-<div class="accordion1">
-
-    <div class="card-header"><!--year-->
-        <a data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-            2020
-        </a>
-    </div>
-    <div class="collapse" id="collapseExample"><!--MONTHS-->
-        <div class="card-header month"><!--month-->
-            <a data-toggle="collapse" href="#collapseExample2" role="button" aria-expanded="false" aria-controls="collapseExample2">
-                ene
-            </a>
-        </div>
-        <div class="collapse" id="collapseExample2"><!--DAYS-->
-            <div class="card-header day"><!--day-->
-                <button class="btn btn-link">26</button>
-            </div>
-        </div>
-    </div>
-
-</div>
-
-<div class="accordion">
-        <div class="card-header"><!--year-->
-            <a data-toggle="collapse" href="#collapseMonths-ANIOAQUI" role="button" aria-expanded="false" aria-controls="collapseMonths-ANIOAQUI">
-                2020
-            </a>
-        </div>
-        <div class="collapse" id="collapseMonths-ANIOAQUI"><!--MONTHS-->
-            <div class="card-header month"><!--month-->
-                <a data-toggle="collapse" href="#collapseDays-MESAQUI" role="button" aria-expanded="false" aria-controls="collapseDays-MESAQUI">
-                    ene
-                </a>
-            </div>
-            <div class="collapse" id="collapseDays-MESAQUI"><!--DAYS-->
-                <div class="card-header day"><!--day-->
-                    <button class="btn btn-link">26</button>
-                </div>
-            </div>
-        </div>
-
-    </div>
-
-
-
-
-
-<?php//CIERRO ACCORDION
