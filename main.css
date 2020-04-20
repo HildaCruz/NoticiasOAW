@@ -22,7 +22,7 @@ input[type="text"]{
 }
 
 .card-header{
-    background-color: #73949a!important;
+    background-color: #a6c8cc !important;
     color: white !important;
     cursor: pointer;
     border: none;
@@ -31,9 +31,11 @@ input[type="text"]{
     transition: 0.4s;
     vertical-align: middle;
 }
-.active,.card-header.year:hover,.card-header.month:hover,.card-header.day:hover {background-color: #2f3e41!important;}
-.card-header.month{background-color: #95aeb2!important;}
-.card-header.day{background-color: #b7c8cb!important;}
+.active,.card-header:hover {background-color: #7E9DA2!important;}
+.card-header.month{background-color: #B6D2D5!important;}
+.card-header.month:hover{background-color: #7E9DA2!important;}
+.card-header.day{background-color: #c6dcde!important;}
+.card-header.day:hover{background-color: #8da8ad!important;}
 .panel {
     padding: 0 18px;
     background-color: white;
@@ -54,4 +56,3 @@ img{
     height: auto;
 }
 p.card-text{margin-bottom: 2%!important;}
-.card-header.btn{padding: 0!important;background: none!important;border: none!important;font-size: inherit!important;}
