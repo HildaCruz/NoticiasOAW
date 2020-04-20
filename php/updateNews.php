@@ -56,7 +56,7 @@ if (!$mysqli) {
                         $description = $item->get_description();
                         $date_time = $item->get_date('H:i:s');
 
-                        $queryInsertArticulo = "INSERT INTO `articulo` (`id`, `link`, `titulo`, `autor`, `fecha`, `descripcion`, `id_pagina`) VALUES (NULL, '" . $link . "', '" . $title . "', '" . $author . "', '" . $date . "', '" . $description . "', '" . $id_pagina . "')";
+                        $queryInsertArticulo = "INSERT INTO `articulo` (`id`, `link`, `titulo`, `autor`, `fecha`, `hora` , `descripcion`, `id_pagina`) VALUES (NULL, '" . $link . "', '" . $title . "', '" . $author . "', '" . $date . "', '" . $date_time ."', '" . $description . "', '" . $id_pagina . "')";
 
                         if ($resultInsertArticulo = $mysqli->query($queryInsertArticulo)) {
                             $success = true;
