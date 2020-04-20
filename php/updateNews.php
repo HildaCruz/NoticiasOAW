@@ -1,6 +1,7 @@
 <?php
 
 require_once('../simplepie-1.5/autoloader.php');
+require_once ('../scraping/WebScraper.php');
 
 $feed = new SimplePie();
 $success = false;
@@ -55,6 +56,10 @@ if (!$mysqli) {
                         $date = $item->get_date('Y-m-d');
                         $description = $item->get_description();
                         $date_time = $item->get_date('H:i:s');
+
+                        //INSERTAR CODIGO DE WEBSCRAPER
+                        //$scraper = new WebScraper($link);
+                        //$keywords = $scraper->getKeywords();
 
                         $queryInsertArticulo = "INSERT INTO `articulo` (`id`, `link`, `titulo`, `autor`, `fecha`, `hora` , `descripcion`, `id_pagina`) VALUES (NULL, '" . $link . "', '" . $title . "', '" . $author . "', '" . $date . "', '" . $date_time ."', '" . $description . "', '" . $id_pagina . "')";
 
