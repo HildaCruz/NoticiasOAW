@@ -28,6 +28,24 @@ function buscarFecha(fecha) {
     });
 }
 
+/*function agregarRSS(url){
+    var confirmar = confirm("¿Desea agregar el siguiente URL?");
+    if (confirmar) {
+        $.ajax({
+            url: 'php/LinksRSS.php',
+            data: {url: url},
+            type: 'POST',
+            success: function (response) {
+                alert("El URL se ha grardado exitosamente");
+            },
+            error: function (data) {
+                alert("Hubo un error en el almacenamiento del URL");
+            }
+
+        });
+    }
+}*/
+
 function actualizarNoticias() {
     var confirmar = confirm("¿Desea actualizar el feed?");
     if (confirmar) {
