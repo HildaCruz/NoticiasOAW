@@ -30,38 +30,54 @@ if (!$mysqli) {
 
             for ($i = 0; $i < $item_qty; $i++) {
 
+
+                //INSERTAR CODIGO DE WEBSCRAPER
+                //$scraper = new WebScraper($link);
+                //$keywords = $scraper->getKeywords();
+
+
                 $item = $feed->get_item($i);
                 $link = $item->get_link();
 
-                //Revisar si la noticia ya está registrada
-                $queryCheckIfExists = "SELECT id FROM articulo WHERE link = '" . $link . "'";
+                $title = $item->get_title();
 
+                if ($item->get_author() == null) {
+                    $author = "Unknown";
+                } else {
+                    if ($item->get_author()->get_name() == null) {
+                        $author = "Unknown";
+                    } else {
+                        $author = $item->get_author()->get_name();
+                    }
+                }
+                $date = $item->get_date('Y-m-d');
+                $description = $item->get_description();
+                $date_time = $item->get_date('H:i:s');
+                $last_update = $item->get_updated_date('Y-m-d');
+
+                //Revisar si la noticia ya está registrada
+                $queryCheckIfExists = "SELECT id, version FROM articulo WHERE link = '" . $link . "'";
                 if ($resultCheckIfExists = $mysqli->query($queryCheckIfExists)) {
                     if ($resultCheckIfExists->num_rows > 0) {
-                        //Si el link de la noticia ya está registrado, pasamos a la siguiente noticia
-                        continue;
-                    } else {
-                        //Si no está registrada, la registramos
+                        //Si el link de la noticia ya está registrado, revisamos fecha de actualización y pasamos a la siguiente noticia
+                        $this_updateTime = $resultCheckIfExists->fetch_assoc();
 
-                        $title = $item->get_title();
-                        if ($item->get_author() == null) {
-                            $author = "Unknown";
-                        } else {
-                            if ($item->get_author()->get_name() == null) {
-                                $author = "Unknown";
+                        if($this_updateTime == $last_update){
+                            continue;//si la fecha es la misma pasa a la siguiente noticia
+                        }
+                        else{
+                            //si no es la misma, la actualizamos
+                            $queryActualizaArticulo = "UPDATE `articulo` SET `titulo`= '" . $title . "', `autor`='" . $author . "'," . "`fecha`='" . $date . "'," . "`hora`='" . $date_time . "'," . "`version`='" . $last_update . "'," . "`descripcion`='" . $description . "'," . "WHERE `articulo`.`link` ='" . $link . "'";
+
+                            if ($resultInsertArticulo = $mysqli->query($queryActualizaArticulo)) {
+                                $success = true;
                             } else {
-                                $author = $item->get_author()->get_name();
+                                $success = false;
                             }
                         }
-                        $date = $item->get_date('Y-m-d');
-                        $description = $item->get_description();
-                        $date_time = $item->get_date('H:i:s');
-
-                        //INSERTAR CODIGO DE WEBSCRAPER
-                        //$scraper = new WebScraper($link);
-                        //$keywords = $scraper->getKeywords();
-
-                        $queryInsertArticulo = "INSERT INTO `articulo` (`id`, `link`, `titulo`, `autor`, `fecha`, `hora` , `descripcion`, `id_pagina`) VALUES (NULL, '" . $link . "', '" . $title . "', '" . $author . "', '" . $date . "', '" . $date_time ."', '" . $description . "', '" . $id_pagina . "')";
+                    } else {
+                        //Si no está registrada, la registramos
+                        $queryInsertArticulo = "INSERT INTO `articulo` (`id`, `link`, `titulo`, `autor`, `fecha`, `hora` , `version`, `descripcion`, `id_pagina`) VALUES (NULL, '" . $link . "', '" . $title . "', '" . $author . "', '" . $date . "', '" . $date_time ."', '" . $last_update . "','" . $description . "', '" . $id_pagina . "')";
 
                         if ($resultInsertArticulo = $mysqli->query($queryInsertArticulo)) {
                             $success = true;
