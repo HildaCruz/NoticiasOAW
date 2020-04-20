@@ -20,8 +20,8 @@ if (!$mysqli) {
         }
     }
     //LIBERO DB
-        $resultado->free();
-        $mysqli->close();
+    $resultado->free();
+    $mysqli->close();
 } //end else
 ?><h4>Filtro por fecha</h4><?php
 sort($dates);
@@ -48,53 +48,53 @@ for($i=0; $i<$dateLength;$i++) {//POR CADA FECHA
             </a>
         </div>
         <div class="collapse" id="collapseMonths-<?php echo $this_year;?>"><!--MONTHS-->
-        <?php
+            <?php
 
-        $yearMonths = array_reverse($yearMonths);
-        $yMonthLength = count($yearMonths);
-        $months = array();
-        for ($j = 0; $j < $yMonthLength; $j++) { //OBTENGO EL MES DEL AÑO
-            $this_month = date("m", strtotime($yearMonths[$j])); //numero
-            if (in_array($this_month,$months)==false) {//mientras no se haya hecho ese mes:
-                $monthDays = array();
-                for ($k = 0; $k < $yMonthLength; $k++) {//busco todos los que tengan ese mes
-                    $temp_month = date("m", strtotime($yearMonths[$k]));
-                    if ($this_month == $temp_month) {
-                        array_push($monthDays, $yearMonths[$k]); //añado los días al array temporal de ese mes
+            $yearMonths = array_reverse($yearMonths);
+            $yMonthLength = count($yearMonths);
+            $months = array();
+            for ($j = 0; $j < $yMonthLength; $j++) { //OBTENGO EL MES DEL AÑO
+                $this_month = date("m", strtotime($yearMonths[$j])); //numero
+                if (in_array($this_month,$months)==false) {//mientras no se haya hecho ese mes:
+                    $monthDays = array();
+                    for ($k = 0; $k < $yMonthLength; $k++) {//busco todos los que tengan ese mes
+                        $temp_month = date("m", strtotime($yearMonths[$k]));
+                        if ($this_month == $temp_month) {
+                            array_push($monthDays, $yearMonths[$k]); //añado los días al array temporal de ese mes
+                        }
                     }
-                }
 
-                //CREO Y CIERRO CARD MES
-                $this_Month = date("M", strtotime($yearMonths[$j])); //letra?>
-                <div class="card-header month"><!--month-->
-                    <a data-toggle="collapse" href="#collapseDays-<?php echo $this_Month . $this_year; ?>" role="button"
-                       aria-expanded="false" aria-controls="collapseDays-<?php echo $this_Month . $this_year; ?>">
-                        <?php echo $this_Month; ?>
-                    </a>
-                </div>
+                    //CREO Y CIERRO CARD MES
+                    $this_Month = date("M", strtotime($yearMonths[$j])); //letra?>
+                    <div class="card-header month"><!--month-->
+                        <a data-toggle="collapse" href="#collapseDays-<?php echo $this_Month . $this_year; ?>" role="button"
+                           aria-expanded="false" aria-controls="collapseDays-<?php echo $this_Month . $this_year; ?>">
+                            <?php echo $this_Month; ?>
+                        </a>
+                    </div>
                 <div class="collapse" id="collapseDays-<?php echo $this_Month . $this_year; ?>"><!--DAYS-->
-                <?php
+                    <?php
 
-                $mDayLength = count($monthDays);
-                $days = array();
-                for ($m = 0; $m < $mDayLength; $m++) { //OBTENGO EL DÍA DEL MES
-                    $this_date = date("Y-m-d", strtotime($monthDays[$m]));
-                    if (in_array($this_date, $days) == false) {//mientras no se haya hecho ese día:
-                        //CREO CARD DÍA
-                        $this_day = date("d", strtotime($monthDays[$m])); ?>
-                        <div class="card-header day"><!--day-->
-                            <button class="btn btn-link"
-                                    onclick="buscarFecha('<?php echo $this_date ?>')"><?php echo $this_day; ?></button>
-                        </div>
-                        <?php
-                        array_push($days, $this_date);//consumo el día como hecho
+                    $mDayLength = count($monthDays);
+                    $days = array();
+                    for ($m = 0; $m < $mDayLength; $m++) { //OBTENGO EL DÍA DEL MES
+                        $this_date = date("Y-m-d", strtotime($monthDays[$m]));
+                        if (in_array($this_date, $days) == false) {//mientras no se haya hecho ese día:
+                            //CREO CARD DÍA
+                            $this_day = date("d", strtotime($monthDays[$m])); ?>
+                            <div class="card-header day"><!--day-->
+                                <button class="btn btn-link"
+                                        onclick="buscarFecha('<?php echo $this_date ?>')"><?php echo $this_day; ?></button>
+                            </div>
+                            <?php
+                            array_push($days, $this_date);//consumo el día como hecho
+                        }
                     }
+                    //CIERRO EL MES?></div><?php
+                    array_push($months,$this_month);//consumo el mes como hecho
                 }
-                //CIERRO EL MES?></div><?php
-                array_push($months,$this_month);//consumo el mes como hecho
             }
-        }
-        //CIERRO EL ACORDEON Y CARD DEL AÑO?> </div></div><?php
+            //CIERRO EL ACORDEON Y CARD DEL AÑO?> </div></div><?php
         array_push($years, $this_year);//consumo el año como hecho
     }
 }
