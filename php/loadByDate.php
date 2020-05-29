@@ -4,7 +4,7 @@ $mysqli = new mysqli('localhost', 'root', '', 'noticias');
 if (!$mysqli) {
     $info = "No se pudo realizar la conexión a la base de datos";
 } else {
-    $query = "SELECT * FROM articulo WHERE fecha = '".$date_query."'";
+    $query = "SELECT link, titulo, autor, fecha, hora, descripcion FROM articulo WHERE fecha = '".$date_query."'";
     $resultado = $mysqli->query($query);
     $response=array();
     if ($resultado->num_rows > 0) {
