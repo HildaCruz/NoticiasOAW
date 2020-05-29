@@ -9,7 +9,7 @@ if (!$mysqli) {
     $info = "No se pudo realizar la conexión a la base de datos";
 } else {
     //RECIBO TODAS LAS FECHAS
-    $query = "SELECT * FROM articulo";
+    $query = "SELECT fecha FROM articulo";
     $resultado = $mysqli->query($query);
     if ($resultado->num_rows > 0) {
         while ($fila = $resultado->fetch_assoc()) {
