@@ -53,6 +53,11 @@ img{
     width: 20%!important;
     height: auto;
 }
+
+.icono{
+    float:left;
+    padding-right: 5px;
+}
 p.card-text{margin-bottom: 2%!important;}
 .card-header.btn{padding: 0!important;background: none!important;border: none!important;font-size: inherit!important;}
 em{font-weight: bold!important;}
