@@ -10,7 +10,7 @@ if (!$mysqli) {
     if ($resultado->num_rows > 0) {
         while ($aValues = $resultado->fetch_assoc()) {
 
-            $link = $aValues['id'];
+            $link = $aValues['link'];
             $titulo = $aValues['titulo'];
             $autor = $aValues['autor'];
             $fecha = $aValues['fecha'];
